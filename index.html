@@ -464,7 +464,8 @@
     margin-top: 1.1rem;
     margin-bottom: 0;
   }
-  #patterns .caveat {
+  #patterns .caveat,
+  #distribution .caveat {
     font-size: 0.86rem;
     color: var(--ink-3);
     margin: 0.85rem 0 0;
@@ -666,6 +667,13 @@ window.__VIZ_DATA__ = {"voices": [{"bpn": "Competence", "valence": "positive", "
     sessions.
   </p>
   <div id="dist-plot"></div>
+  <p class="caveat">
+    The short vertical line in each row is that need's <strong>median</strong> session
+    score &mdash; the score with half of sessions above and half below. Reading the
+    three ticks left to right: Competence sits at 6, Relatedness around 5.2, Autonomy
+    at 5. Autonomy's median is pulled down by the cluster of sessions sitting exactly
+    at 5; its second, smaller cluster around 7&ndash;8 is visible to the right.
+  </p>
 </section>
 
 <section id="voices">
@@ -978,6 +986,23 @@ function renderDistribution(sessions) {
         stroke: "#1a202c",
         strokeWidth: 2.5,
       }),
+
+      // Inline label on the Competence median tick so a reader scanning the
+      // chart sees "median" without needing to read the caption below.
+      Plot.text(
+        medians.filter(d => d.bpn === "Sense of Competence"),
+        {
+          x: "median",
+          fy: "bpn",
+          text: () => "median",
+          dx: 8,
+          dy: -22,
+          textAnchor: "start",
+          fontSize: 10.5,
+          fontStyle: "italic",
+          fill: "#1a202c",
+        }
+      ),
     ],
   });
 
